@@ -1,0 +1,415 @@
+### Step 1: Register brand new doctor
+POST http://localhost:5000/api/auth/register
+Content-Type: application/json
+
+{
+  "name": "Dr. Sarah Wilson",
+  "email": "sarah@hospital.com",
+  "password": "secure123",
+  "role": "doctor"
+}
+
+### Step 2: Login - COPY THE TOKEN FROM RESPONSE
+POST http://localhost:5000/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "sarah.wilson@hospital.com",
+  "password": "secure123"
+}
+
+### Step 3: Create doctor profile - PASTE TOKEN FROM STEP 2
+POST http://localhost:5000/api/doctors
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhNTdiNmY4MjU4Mjc0MTFkMGQ2ZDEwNSIsInJvbGUiOiJkb2N0b3IiLCJpYXQiOjE3ODQxMzM0MDcsImV4cCI6MTc4NDczODIwN30.E5QA1_se0FqmguKJ0l88bM2SrMDYWE2maOj7ccqEVy4
+
+{
+  "specialization": "Dermatology",
+  "qualification": "MBBS, MD - Dermatology",
+  "experienceYears": 8,
+  "consultationFee": 800,
+  "bio": "Senior dermatologist with 8 years of experience in clinical and cosmetic dermatology"
+}
+
+### Step 4: Create first slot - USE SAME TOKEN
+POST http://localhost:5000/api/slots
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhNTdiNmY4MjU4Mjc0MTFkMGQ2ZDEwNSIsInJvbGUiOiJkb2N0b3IiLCJpYXQiOjE3ODQxMzM0MDcsImV4cCI6MTc4NDczODIwN30.E5QA1_se0FqmguKJ0l88bM2SrMDYWE2maOj7ccqEVy4
+
+{
+  "date": "2026-07-21",
+  "startTime": "09:00",
+  "endTime": "09:30"
+}
+
+### Step 6: Create third slot
+POST http://localhost:5000/api/slots
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhNTdiNmY4MjU4Mjc0MTFkMGQ2ZDEwNSIsInJvbGUiOiJkb2N0b3IiLCJpYXQiOjE3ODQxMzM0MDcsImV4cCI6MTc4NDczODIwN30.E5QA1_se0FqmguKJ0l88bM2SrMDYWE2maOj7ccqEVy4
+
+{
+  "date": "2026-07-22",
+  "startTime": "14:00",
+  "endTime": "14:30"
+}
+### Check all doctors
+GET http://localhost:5000/api/doctors
+
+### Step 7: View my slots (getMySlot)
+GET http://localhost:5000/api/slots/mine
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhNTdiNmY4MjU4Mjc0MTFkMGQ2ZDEwNSIsInJvbGUiOiJkb2N0b3IiLCJpYXQiOjE3ODQxMzM0MDcsImV4cCI6MTc4NDczODIwN30.E5QA1_se0FqmguKJ0l88bM2SrMDYWE2maOj7ccqEVy4
+
+### Step 9: View available slots for your doctor (getSlotByDoctor)
+### REPLACE WITH ACTUAL DOCTOR _ID FROM STEP 8
+GET http://localhost:5000/api/slots?doctorId=6a57b73025827411d0d6d106
+
+### Step 10: No token - should fail with 401
+POST http://localhost:5000/api/slots
+Content-Type: application/json
+
+{
+  "date": "2026-07-23",
+  "startTime": "12:00",
+  "endTime": "12:30"
+}
+
+### Step 11: Login as patient
+POST http://localhost:5000/api/auth/register
+Content-Type: application/json
+
+{
+  "name": "Dr. Sarah Wilson",
+  "email": "sarahaa.wilson@hospital.com",
+  "password": "secure1234",
+  "role": "patient"
+}
+### Step 12: Patient tries to create slot - should fail with 403
+POST http://localhost:5000/api/slots
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhNTdjM2M0ZWFiYTEzYjJjMDk3NzBhNSIsInJvbGUiOiJwYXRpZW50IiwiaWF0IjoxNzg0MTM2NjQ0LCJleHAiOjE3ODQ3NDE0NDR9.st5bM-nTP0l8yaeT1BqlW5Ry_gY82gunad7oySBd6Ss
+
+{
+  "date": "2026-07-23",
+  "startTime": "12:00",
+  "endTime": "12:30"
+}
+
+### Register a patient
+POST http://localhost:5000/api/auth/register
+Content-Type: application/json
+
+{
+  "name": "Test Patient",
+  "email": "patient3@test.com",
+  "password": "test1234",
+  "role": "patient"
+}
+
+### Book an appointment
+POST http://localhost:5000/api/appointments
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhNWExYzdlOGQ2OGIwMTNkZWUzZjM3ZSIsInJvbGUiOiJwYXRpZW50IiwiaWF0IjoxNzg0MjkwNDMwLCJleHAiOjE3ODQ4OTUyMzB9.tZxNE7FWWMwi5agn4PxtJjR7LzvoiDIY59_8Sn-S3is"
+
+
+{
+  "slotId": "1",
+  "reasonForVisit": "Regular checkup"
+}
+###
+GET http://localhost:5000/api/doctors
+###
+GET http://localhost:5000/api/slots?doctorId=6a57b73025827411d0d6d106
+
+###
+GET http://localhost:5000/api/slots/mine
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhNTdiNmY4MjU4Mjc0MTFkMGQ2ZDEwNSIsInJvbGUiOiJkb2N0b3IiLCJpYXQiOjE3ODQyOTE5NDQsImV4cCI6MTc4NDg5Njc0NH0.b5BI0xri1ynxGMduIfBjfYrE7a71On12L106vkWuEDQ
+
+###
+### Book an appointment
+POST http://localhost:5000/api/appointments
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhNWEyMmY0YmE1NzhmZjhlNjNhNTMyMyIsInJvbGUiOiJwYXRpZW50IiwiaWF0IjoxNzg0MjkyMDg0LCJleHAiOjE3ODQ4OTY4ODR9.avaqrdpEuVvojcaOzpdhVSry4-bE5W1AHp_ih13_exc
+
+{
+  "slotId": "6a57b9b5eaba13b2c09770a3",
+  "reasonForVisit": "Regular checkup"
+}
+### Register a patient
+POST http://localhost:5000/api/auth/register
+Content-Type: application/json
+
+{
+  "name": "Test Patient",
+  "email": "patient4@test.com",
+  "password": "test1234",
+  "role": "patient"
+}
+### Book an appointment
+POST http://localhost:5000/api/appointments
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhNWEyNTFlYmFmZmM4ZDdlN2ZkYzZmNyIsInJvbGUiOiJwYXRpZW50IiwiaWF0IjoxNzg0MjkyNjM4LCJleHAiOjE3ODQ4OTc0Mzh9._V7o2ky8XiCa96mIfggq-Ob_OkF6FREtjdZgdkxnEDk
+
+{
+  "slotId": "6a57b9b5eaba13b2c09770a3",
+  "reasonForVisit": "Regular checkup"
+}
+### Login as Dr. Sarah Wilson first
+POST http://localhost:5000/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "sarah.wilson@hospital.com",
+  "password": "secure123"
+}
+
+### Create a new slot (USE TOKEN FROM ABOVE)
+POST http://localhost:5000/api/slots
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhNTdiNmY4MjU4Mjc0MTFkMGQ2ZDEwNSIsInJvbGUiOiJkb2N0b3IiLCJpYXQiOjE3ODQyOTYyNzEsImV4cCI6MTc4NDkwMTA3MX0.Vy1usUGnEwakpiwgdCqAbiLbdDpixYaSzSghMOfqC-Y
+
+{
+  "date": "2026-07-25",
+  "startTime": "11:00",
+  "endTime": "11:30"
+}
+
+### Register a new patient
+POST http://localhost:5000/api/auth/register
+Content-Type: application/json
+
+{
+  "name": "John Patient",
+  "email": "john.test@patient.com",
+  "password": "patient123",
+  "role": "patient"
+}
+
+### Login as patient (COPY THE TOKEN)
+POST http://localhost:5000/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "john.test@patient.com",
+  "password": "patient123"
+}
+
+### View Dr. Sarah Wilson's available slots
+GET http://localhost:5000/api/slots?doctorId=6a57b73025827411d0d6d106
+
+### Book appointment (USE PATIENT TOKEN + SLOT ID FROM STEP 3)
+POST http://localhost:5000/api/appointments
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhNWEzMzZjYmFmZmM4ZDdlN2ZkYzZmOSIsInJvbGUiOiJwYXRpZW50IiwiaWF0IjoxNzg0Mjk2Mzc4LCJleHAiOjE3ODQ5MDExNzh9.LYufOtjsYJzSH6dA5yQ0BC8-m5qpWmt2QRoW3NHwfOI
+
+{
+  "slotId": "6a5a543451d08bd132f3bdb3"
+}
+
+### Get my appointments (patient view)
+GET http://localhost:5000/api/appointments/my
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhNWEzMzZjYmFmZmM4ZDdlN2ZkYzZmOSIsInJvbGUiOiJwYXRpZW50IiwiaWF0IjoxNzg0Mjk2NDIxLCJleHAiOjE3ODQ5MDEyMjF9.H-XHgCLPoqQAArB5kIFni6nAGdIUH-PR9cYMYePLTSg
+
+### Login as doctor
+POST http://localhost:5000/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "sarah.wilson@hospital.com",
+  "password": "secure123"
+}
+
+### Get doctor's appointments (USE DOCTOR TOKEN)
+GET http://localhost:5000/api/slots/mine
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhNTdiNmY4MjU4Mjc0MTFkMGQ2ZDEwNSIsInJvbGUiOiJkb2N0b3IiLCJpYXQiOjE3ODQyOTc1MjEsImV4cCI6MTc4NDkwMjMyMX0.Pb79San6eNvn0IQgG9v-jU1-1JgNIGITqRl4wh_P6E8
+
+### Cancel appointment (USE PATIENT TOKEN + APPOINTMENT ID FROM STEP 6)
+DELETE http://localhost:5000/api/appointments/6a5a39acf9a2ac5798e795f32
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhNWEzMzZjYmFmZmM4ZDdlN2ZkYzZmOSIsInJvbGUiOiJwYXRpZW50IiwiaWF0IjoxNzg0Mjk4MDE1LCJleHAiOjE3ODQ5MDI4MTV9.zZhWUed59fET-EZV8x0JvsovXcgM92LVm7_shGWCV5A
+
+### Step 1: Login as patient
+POST http://localhost:5000/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "john.test@patient.com",
+  "password": "patient123"
+}
+
+### Step 2: View available slots (find a real slot to book)
+GET http://localhost:5000/api/slots?doctorId=6a57b73025827411d0d6d106
+
+### Step 3: Book that slot (USE PATIENT TOKEN FROM STEP 1 + REAL SLOT ID)
+POST http://localhost:5000/api/appointments
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhNWEzMzZjYmFmZmM4ZDdlN2ZkYzZmOSIsInJvbGUiOiJwYXRpZW50IiwiaWF0IjoxNzg0Mjk4MjgxLCJleHAiOjE3ODQ5MDMwODF9.xR6VcAcuXMqjYtlADk0kQt1gTvTTJBnHkWzGEZnepts
+
+{
+  "slotId": "6a57c089eaba13b2c09770a4"
+}
+
+### Step 4: View your appointments (confirm it exists)
+GET http://localhost:5000/api/appointments/my
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhNWEzMzZjYmFmZmM4ZDdlN2ZkYzZmOSIsInJvbGUiOiJwYXRpZW50IiwiaWF0IjoxNzg0Mjk4MjgxLCJleHAiOjE3ODQ5MDMwODF9.xR6VcAcuXMqjYtlADk0kQt1gTvTTJBnHkWzGEZnepts
+
+### Step 5: Cancel using the REAL appointment ID from Step 3
+DELETE http://localhost:5000/api/appointments/6a5a3c29f9a2ac5798e795f5
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhNWEzMzZjYmFmZmM4ZDdlN2ZkYzZmOSIsInJvbGUiOiJwYXRpZW50IiwiaWF0IjoxNzg0Mjk4MjgxLCJleHAiOjE3ODQ5MDMwODF9.xR6VcAcuXMqjYtlADk0kQt1gTvTTJBnHkWzGEZnepts
+
+### Check slot is free after cancellation
+GET http://localhost:5000/api/slots?doctorId=6a57b73025827411d0d6d106
+
+### Get doctor's appointments
+GET http://localhost:5000/api/slots/mine
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhNTdiNmY4MjU4Mjc0MTFkMGQ2ZDEwNSIsInJvbGUiOiJkb2N0b3IiLCJpYXQiOjE3ODQyOTg4OTIsImV4cCI6MTc4NDkwMzY5Mn0.zz7_9dHK2fWT6SmlLznIN9IbJQAdeGWxWtVwfd0QDro
+
+### Login as patient
+POST http://localhost:5000/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "john.test@patient.com",
+  "password": "patient123"
+}
+
+### View available slots
+GET http://localhost:5000/api/slots?doctorId=6a57b73025827411d0d6d106
+
+### Book a slot (COPY TOKEN FROM STEP 1 + COPY A SLOT ID FROM STEP 2)
+POST http://localhost:5000/api/appointments
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhNWEzMzZjYmFmZmM4ZDdlN2ZkYzZmOSIsInJvbGUiOiJwYXRpZW50IiwiaWF0IjoxNzg0MzAxMjk2LCJleHAiOjE3ODQ5MDYwOTZ9.uhNuxyPKEcK5gN_WX0U_x-Zijy6uiLXe2ZIi6oVzlp0
+
+{
+  "slotId": "6a57c089eaba13b2c09770a4"
+}
+
+### View my appointments
+GET http://localhost:5000/api/appointments/my
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhNWEzMzZjYmFmZmM4ZDdlN2ZkYzZmOSIsInJvbGUiOiJwYXRpZW50IiwiaWF0IjoxNzg0MzAxMjk2LCJleHAiOjE3ODQ5MDYwOTZ9.uhNuxyPKEcK5gN_WX0U_x-Zijy6uiLXe2ZIi6oVzlp0
+
+### Login as patient
+POST http://localhost:5000/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "john.test@patient.com",
+  "password": "patient123"
+}
+
+### Try to cancel the completed appointment (USE PATIENT TOKEN + SAME APPOINTMENT ID)
+DELETE http://localhost:5000/api/appointments/6a5a46fcf9a2ac5798e795f6
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhNWEzMzZjYmFmZmM4ZDdlN2ZkYzZmOSIsInJvbGUiOiJwYXRpZW50IiwiaWF0IjoxNzg0MzA0NTAxLCJleHAiOjE3ODQ5MDkzMDF9.1yugV4-CQXjoOxO-oUESIInvMmPxnWox4v8YuGkZLsc
+
+### Step 4: Login as doctor
+POST http://localhost:5000/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "sarah.wilson@hospital.com",
+  "password": "secure123"
+}
+
+### Step 5: Complete the appointment (DOCTOR TOKEN + APPOINTMENT ID FROM STEP 3)
+PATCH http://localhost:5000/api/appointments/6a5a46fcf9a2ac5798e795f6/complete
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhNTdiNmY4MjU4Mjc0MTFkMGQ2ZDEwNSIsInJvbGUiOiJkb2N0b3IiLCJpYXQiOjE3ODQzMDUwMDIsImV4cCI6MTc4NDkwOTgwMn0.y8FUtnQ3gtQr2K6HKj3HWJr52knkgAeMzWGB28sI0GQ
+
+
+###
+POST http://localhost:5000/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "sarah.wilson@hospital.com",
+  "password": "secure123"
+}
+###
+POST http://localhost:5000/api/slots
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhNTdiNmY4MjU4Mjc0MTFkMGQ2ZDEwNSIsInJvbGUiOiJkb2N0b3IiLCJpYXQiOjE3ODQzMDUyNjcsImV4cCI6MTc4NDkxMDA2N30.Krry5uXmgZUMQMT0cKzMSAGIgrzNsk0h4fTSEie-Dwk
+
+{
+  "date": "2026-08-01",
+  "startTime": "10:00",
+  "endTime": "10:20"
+}
+###
+POST http://localhost:5000/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "john.test@patient.com",
+  "password": "patient123"
+}
+
+###
+GET http://localhost:5000/api/slots?doctorId=6a57b73025827411d0d6d106
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhNWEzMzZjYmFmZmM4ZDdlN2ZkYzZmOSIsInJvbGUiOiJwYXRpZW50IiwiaWF0IjoxNzg0MzA1MzIyLCJleHAiOjE3ODQ5MTAxMjJ9.EymF2H6BiHOeWFR6EAMbVSU6IPJ9Aub8GVjyqDODN_k
+###
+POST http://localhost:5000/api/appointments
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhNWEzMzZjYmFmZmM4ZDdlN2ZkYzZmOSIsInJvbGUiOiJwYXRpZW50IiwiaWF0IjoxNzg0MzA1MzIyLCJleHAiOjE3ODQ5MTAxMjJ9.EymF2H6BiHOeWFR6EAMbVSU6IPJ9Aub8GVjyqDODN_k
+
+{
+  "slotId": "6a5a579151d08bd132f3bdb7"
+}
+###
+GET http://localhost:5000/api/appointments/my
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhNWEzMzZjYmFmZmM4ZDdlN2ZkYzZmOSIsInJvbGUiOiJwYXRpZW50IiwiaWF0IjoxNzg0MzA1MzIyLCJleHAiOjE3ODQ5MTAxMjJ9.EymF2H6BiHOeWFR6EAMbVSU6IPJ9Aub8GVjyqDODN_k
+
+###
+POST http://localhost:5000/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "sarah.wilson@hospital.com",
+  "password": "secure123"
+}
+###
+PATCH http://localhost:5000/api/appointments/6a5a579f51d08bd132f3bdb8/complete
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhNTdiNmY4MjU4Mjc0MTFkMGQ2ZDEwNSIsInJvbGUiOiJkb2N0b3IiLCJpYXQiOjE3ODQzMDU2NDUsImV4cCI6MTc4NDkxMDQ0NX0.LGNWdJSYVtzIqPbPPtpOTDlHWVvmvR8AO0jbHy2YJFU
+
+###
+DELETE http://localhost:5000/api/appointments/6a5a579f51d08bd132f3bdb8
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhNWEzMzZjYmFmZmM4ZDdlN2ZkYzZmOSIsInJvbGUiOiJwYXRpZW50IiwiaWF0IjoxNzg0MzA1NzIyLCJleHAiOjE3ODQ5MTA1MjJ9.gQrJXW4ZOyVxCB615dxvj2nIR4V54-nfHs7qkGlinkg
+
+
+###
+### Login as patient
+POST http://localhost:5000/api/auth/register
+Content-Type: application/json
+
+{
+  "name": "John Patient",
+  "email": "john.test@patient.com",
+  "password": "patient123",
+  "role": "patient"
+}
+###
+POST http://localhost:5000/api/auth/login
+Content-Type: application/json
+
+{
+  "email":"john.test@patient.com",
+  "password":"patient123"
+}
+
+### AI Symptom Check - Cold/Flu (USE TOKEN)
+POST http://localhost:5000/api/symptoms/check
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhNWNlMmRmMjMyOTg4YTA1OWI3MTYwNyIsInJvbGUiOiJwYXRpZW50IiwiaWF0IjoxNzg0NDcyNDI2LCJleHAiOjE3ODUwNzcyMjZ9.JAH8iyKlikbf_lnfd_jzbYr89ef1lka7WiYNS9wYLXU
+
+{
+  "symptoms": "I have been having fever around 101°F for 3 days, along with body aches, sore throat, and a dry cough. Feeling very tired and have chills at night.",
+  "age": 28,
+  "gender": "male",
+  "duration": "3 days"
+}
+
+### AI Health Tip
+POST http://localhost:5000/api/symptoms/tips
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhNWNlMmRmMjMyOTg4YTA1OWI3MTYwNyIsInJvbGUiOiJwYXRpZW50IiwiaWF0IjoxNzg0NDcyNDI2LCJleHAiOjE3ODUwNzcyMjZ9.JAH8iyKlikbf_lnfd_jzbYr89ef1lka7WiYNS9wYLXU
+
+{
+  "query": "What foods help lower blood pressure naturally?"
+}

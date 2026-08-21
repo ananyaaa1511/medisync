@@ -1,0 +1,405 @@
+.doctor-profile-page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* ==========================================
+BACK NAVIGATION
+========================================== */
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    transition: var(--transition);
+    width: fit-content;
+}
+
+.back-link:hover {
+    color: var(--primary);
+}
+
+.back-link svg {
+    width: 16px;
+    height: 16px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 2.5;
+}
+
+/* ==========================================
+HERO CARD
+========================================== */
+.dr-hero-card {
+    display: flex;
+    gap: 24px;
+    align-items: center;
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 30px;
+    box-shadow: var(--shadow-sm);
+    box-sizing: border-box;
+}
+
+.dr-hero-avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-color: var(--primary-light);
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    font-weight: 800;
+    flex-shrink: 0;
+    border: 3px solid var(--surface);
+    box-shadow: var(--shadow-sm);
+}
+
+.dr-hero-info {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.dr-hero-info h1 {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.dr-hero-specialty {
+    font-size: 15px;
+    color: var(--primary);
+    font-weight: 600;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.dr-neutral-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background-color: var(--info-bg);
+    color: var(--info);
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    width: fit-content;
+}
+
+/* ==========================================
+STATS ROW
+========================================== */
+.dr-stats-row {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-top: 15px;
+}
+
+.dr-stat-box {
+    background-color: var(--background);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 8px 16px;
+    min-width: 110px;
+    box-sizing: border-box;
+}
+
+.dr-stat-label {
+    font-size: 10px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    font-weight: 750;
+    letter-spacing: 0.5px;
+    display: block;
+    margin-bottom: 2px;
+}
+
+.dr-stat-value {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+/* ==========================================
+TWO COLUMN LAYOUT
+========================================== */
+.dr-details-grid {
+    display: grid;
+    grid-template-columns: 63% 37%;
+    gap: 30px;
+    align-items: start;
+}
+
+/* Left details sections */
+.dr-info-card {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.info-section-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text-primary);
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 10px;
+    margin: 0 0 15px 0;
+}
+
+.dr-bio-text {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--text-secondary);
+}
+
+/* Info grid */
+.dr-info-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.dr-grid-item {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+}
+
+.dr-grid-icon {
+    width: 22px;
+    height: 22px;
+    color: var(--primary);
+    flex-shrink: 0;
+}
+
+.dr-grid-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.dr-grid-label {
+    font-size: 11px;
+    color: var(--text-muted);
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-bottom: 2px;
+}
+
+.dr-grid-value {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+/* ==========================================
+BOOKING SECTION (RIGHT CARD)
+========================================== */
+.booking-card h2 {
+    font-size: 20px;
+    font-weight: 700;
+    margin: 0 0 4px 0;
+}
+
+.booking-card p.desc {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin: 0 0 24px 0;
+}
+
+.booking-section-label {
+    font-size: 12px;
+    font-weight: 750;
+    color: var(--text-primary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 12px;
+    display: block;
+}
+
+/* Date selection strip */
+.date-selector-container {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    padding-bottom: 10px;
+    margin-bottom: 25px;
+    scrollbar-width: thin;
+}
+
+.date-btn {
+    flex-shrink: 0;
+    width: 65px;
+    height: 70px;
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: var(--transition);
+    box-sizing: border-box;
+}
+
+.date-btn:hover {
+    border-color: var(--primary);
+    background-color: var(--primary-light);
+}
+
+.date-btn.active {
+    background-color: var(--primary);
+    border-color: var(--primary);
+    color: var(--white, #ffffff);
+}
+
+.date-btn-day {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    opacity: 0.8;
+}
+
+.date-btn-num {
+    font-size: 18px;
+    font-weight: 800;
+    margin: 2px 0;
+}
+
+.date-btn-month {
+    font-size: 9px;
+    font-weight: 700;
+    text-transform: uppercase;
+    opacity: 0.85;
+}
+
+/* Time slots grid */
+.time-slots-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-bottom: 25px;
+}
+
+.time-slot-btn {
+    height: 42px;
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    color: var(--text-primary);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+}
+
+.time-slot-btn:hover:not(:disabled) {
+    border-color: var(--primary);
+    background-color: var(--primary-light);
+    color: var(--primary);
+}
+
+.time-slot-btn.active {
+    background-color: var(--primary);
+    border-color: var(--primary);
+    color: var(--white, #ffffff);
+}
+
+.time-slot-btn:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+    background-color: var(--background);
+}
+
+/* Booking summary box */
+.booking-summary-box {
+    background-color: var(--primary-light);
+    border-left: 4px solid var(--primary);
+    border-radius: var(--radius-sm);
+    padding: 16px;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+}
+
+.booking-summary-box h3 {
+    margin: 0 0 10px 0;
+    font-size: 14px;
+    color: var(--primary);
+    font-weight: 700;
+}
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-bottom: 6px;
+}
+
+.summary-row:last-child {
+    margin-bottom: 0;
+}
+
+/* ==========================================
+RESPONSIVE BREAKPOINTS
+========================================== */
+@media (max-width: 992px) {
+    .dr-details-grid {
+        grid-template-columns: 1fr;
+        gap: 25px;
+    }
+}
+
+@media (max-width: 600px) {
+    .dr-hero-card {
+        flex-direction: column;
+        text-align: center;
+        padding: 20px;
+        gap: 15px;
+    }
+
+    .dr-hero-avatar {
+        width: 80px;
+        height: 80px;
+        font-size: 26px;
+    }
+
+    .dr-hero-info {
+        align-items: center;
+    }
+
+    .dr-neutral-badge {
+        align-self: center;
+    }
+
+    .dr-stats-row {
+        justify-content: center;
+    }
+
+    .dr-info-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+}
