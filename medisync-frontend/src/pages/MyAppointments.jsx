@@ -118,6 +118,27 @@ function MyAppointments() {
                         const fee = appointment.doctor?.consultationFee;
                         const isActionable = appointment.status !== "cancelled" && appointment.status !== "completed";
 
+                        // Calculate cancellation restriction
+                        let cancellationMessage = null;
+                        let cancellationStatus = "allowed"; // "allowed", "restricted", "past"
+
+                        if (isActionable && appointment.date && appointment.startTime) {
+                            const apptDateTime = new Date(`${appointment.date}T${appointment.startTime}:00`);
+                            const now = new Date();
+                            if (!isNaN(apptDateTime.getTime())) {
+                                const timeDiffMs = apptDateTime - now;
+                                const hoursDiff = timeDiffMs / (1000 * 60 * 60);
+
+                                if (timeDiffMs <= 0) {
+                                    cancellationStatus = "past";
+                                    cancellationMessage = "This appointment can no longer be cancelled.";
+                                } else if (hoursDiff < 24) {
+                                    cancellationStatus = "restricted";
+                                    cancellationMessage = "Cancellation unavailable within 24 hours of the appointment.";
+                                }
+                            }
+                        }
+
                         return (
                             <Card key={appointment._id}>
                                 <div style={{ display: "flex", justifyContent: "space-between", flexWrap: "wrap", gap: "12px", marginBottom: "15px", alignItems: "flex-start" }}>
@@ -157,15 +178,51 @@ function MyAppointments() {
                                 </div>
 
                                 {isActionable && (
-                                    <div style={{ display: "flex", justifyContent: "flex-end" }}>
-                                        <Button
-                                            onClick={() => triggerCancelConfirmation(appointment._id)}
-                                            disabled={cancellingId === appointment._id}
-                                            variant="danger"
-                                            style={{ height: "36px", fontSize: "13px" }}
-                                        >
-                                            {cancellingId === appointment._id ? "Cancelling..." : "Cancel Appointment"}
-                                        </Button>
+                                    <div style={{ display: "flex", justifyContent: "flex-end", width: "100%" }}>
+                                        {cancellationStatus === "allowed" ? (
+                                            <Button
+                                                onClick={() => triggerCancelConfirmation(appointment._id)}
+                                                disabled={cancellingId === appointment._id}
+                                                variant="danger"
+                                                style={{ height: "36px", fontSize: "13px" }}
+                                            >
+                                                {cancellingId === appointment._id ? "Cancelling..." : "Cancel Appointment"}
+                                            </Button>
+                                        ) : cancellationStatus === "restricted" ? (
+                                            <div style={{ 
+                                                display: "flex", 
+                                                alignItems: "center", 
+                                                gap: "8px", 
+                                                padding: "10px 14px", 
+                                                borderRadius: "var(--radius-sm)", 
+                                                backgroundColor: "var(--warning-bg)", 
+                                                color: "var(--warning)", 
+                                                fontSize: "13px", 
+                                                fontWeight: "600",
+                                                border: "1px solid rgba(217, 148, 61, 0.2)",
+                                                width: "100%",
+                                                boxSizing: "border-box"
+                                            }}>
+                                                <span>⚠️</span> {cancellationMessage}
+                                            </div>
+                                        ) : (
+                                            <div style={{ 
+                                                display: "flex", 
+                                                alignItems: "center", 
+                                                gap: "8px", 
+                                                padding: "10px 14px", 
+                                                borderRadius: "var(--radius-sm)", 
+                                                backgroundColor: "var(--danger-bg)", 
+                                                color: "var(--danger)", 
+                                                fontSize: "13px", 
+                                                fontWeight: "600",
+                                                border: "1px solid rgba(200, 92, 92, 0.2)",
+                                                width: "100%",
+                                                boxSizing: "border-box"
+                                            }}>
+                                                <span>🚫</span> {cancellationMessage}
+                                            </div>
+                                        )}
                                     </div>
                                 )}
                             </Card>

@@ -254,6 +254,7 @@ HERO SECTION
 .hero-actions {
     display: flex;
     gap: 16px;
+    flex-wrap: wrap;
 }
 
 .btn-primary-cta {
@@ -289,6 +290,42 @@ HERO SECTION
 .btn-secondary-cta:hover {
     background: var(--primary-light);
     transform: translateY(-2px);
+}
+
+.btn-doctors-cta {
+    background: var(--primary-light);
+    color: var(--primary);
+    border: 1px solid transparent;
+    padding: 14px 28px;
+    border-radius: 7px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-doctors-cta:hover {
+    background: #d4e8ec;
+    color: var(--primary-dark);
+    transform: translateY(-2px);
+    border-color: rgba(23, 107, 124, 0.2);
+}
+
+.btn-doctors-cta:active {
+    transform: translateY(0);
+}
+
+.btn-doctors-cta svg.cta-icon {
+    width: 18px;
+    height: 18px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
 }
 
 .hero-right {

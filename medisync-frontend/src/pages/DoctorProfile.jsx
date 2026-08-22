@@ -24,7 +24,7 @@ function DoctorProfile() {
         try {
             setLoading(true);
             setError("");
-            
+
             const doctorResponse = await api.get(`/doctors/${id}`);
             setDoctor(doctorResponse.data);
 
@@ -148,7 +148,7 @@ function DoctorProfile() {
                         <Skeleton style={{ height: "16px", width: "30%" }} />
                     </div>
                 </Card>
-                
+
                 {/* Details layout skeleton */}
                 <div className="dr-details-grid">
                     <Card style={{ display: "flex", flexDirection: "column", gap: "15px" }}>
@@ -174,13 +174,13 @@ function DoctorProfile() {
                     <div className="ms-alert ms-alert-danger" style={{ display: "block", padding: "24px" }}>
                         <h3 style={{ margin: "0 0 10px 0" }}>{doctor ? "Failed to load" : "Doctor Not Found"}</h3>
                         <p style={{ margin: "0 0 20px 0" }}>
-                            {doctor 
+                            {doctor
                                 ? "Something went wrong while loading this doctor's profile."
                                 : "The doctor profile you're looking for could not be found."
                             }
                         </p>
                         <div style={{ display: "flex", gap: "12px", justifyContent: "center" }}>
-                            <Button variant="secondary" onClick={() => navigate("/find-doctor")}>
+                            <Button variant="secondary" onClick={() => navigate("/doctors")}>
                                 ← Back to Doctors
                             </Button>
                             {doctor && (
@@ -201,7 +201,7 @@ function DoctorProfile() {
         <div className="doctor-profile-page">
             {/* Back to Doctors */}
             <div>
-                <a href="#back" onClick={(e) => { e.preventDefault(); navigate("/find-doctor"); }} className="back-link">
+                <a href="#back" onClick={(e) => { e.preventDefault(); navigate("/doctors"); }} className="back-link">
                     <svg viewBox="0 0 24 24">
                         <line x1="19" y1="12" x2="5" y2="12"></line>
                         <polyline points="12 19 5 12 12 5"></polyline>
@@ -331,8 +331,8 @@ function DoctorProfile() {
                     <div>
                         <span className="booking-section-label">Available Time Slots</span>
                         {uniqueDates.length === 0 ? (
-                            <EmptyState 
-                                title="No available slots" 
+                            <EmptyState
+                                title="No available slots"
                                 description="This doctor currently has no available appointment slots. Please check back later."
                             />
                         ) : activeSlots.length === 0 ? (
@@ -389,10 +389,10 @@ function DoctorProfile() {
                         disabled={!selectedSlot || bookingSlotId !== null}
                         style={{ width: "100%", height: "46px" }}
                     >
-                        {bookingSlotId !== null 
-                            ? "Booking..." 
-                            : selectedSlot 
-                                ? "Book Appointment" 
+                        {bookingSlotId !== null
+                            ? "Booking..."
+                            : selectedSlot
+                                ? "Book Appointment"
                                 : "Select a time slot to book"
                         }
                     </Button>

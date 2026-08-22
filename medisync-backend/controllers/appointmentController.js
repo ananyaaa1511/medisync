@@ -144,8 +144,14 @@ const cancelAppointment = async (req, res) => {
             return res.status(400).json({ message: 'Cannot cancel a completed appointment' });
         }
 
-        // 24-hour rule applies to BOTH patients and doctors
-        if (isWithin24Hours(appointment.date, appointment.startTime)) {
+        if (isSlotExpired(appointment.date, appointment.startTime)) {
+            return res.status(400).json({ 
+                message: 'Cannot cancel an appointment that has already started or is in the past.' 
+            });
+        }
+
+        // 24-hour rule applies to patients only
+        if (isPatient && isWithin24Hours(appointment.date, appointment.startTime)) {
             return res.status(400).json({ 
                 message: 'Cannot cancel appointment within 24 hours of the scheduled time.' 
             });

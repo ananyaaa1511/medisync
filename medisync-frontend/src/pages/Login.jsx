@@ -31,9 +31,9 @@ function Login() {
             localStorage.setItem("token", response.data.token);
 
             if (response.data.role === "doctor") {
-                navigate("/doctor/dashboard");
+                navigate("/doctor/dashboard", { replace: true });
             } else {
-                navigate("/find-doctor");
+                navigate("/find-doctor", { replace: true });
             }
 
         } catch (error) {

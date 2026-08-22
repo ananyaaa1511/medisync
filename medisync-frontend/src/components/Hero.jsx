@@ -30,6 +30,13 @@ function Hero() {
                         <button onClick={() => navigate("/register")} className="btn-primary-cta">
                             Get Started
                         </button>
+                        <button onClick={() => navigate("/doctors")} className="btn-doctors-cta">
+                            <svg viewBox="0 0 24 24" className="cta-icon">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="12" cy="7" r="4"></circle>
+                            </svg>
+                            See Doctors
+                        </button>
                         <button onClick={handleExplore} className="btn-secondary-cta">
                             Explore MediSync
                         </button>

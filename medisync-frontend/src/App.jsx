@@ -63,8 +63,6 @@ function App() {
     useEffect(() => {
         if (!token && location.pathname === "/find-doctor") {
             navigate("/doctors", { replace: true });
-        } else if (token && location.pathname === "/doctors") {
-            navigate("/find-doctor", { replace: true });
         }
     }, [token, location.pathname, navigate]);
 

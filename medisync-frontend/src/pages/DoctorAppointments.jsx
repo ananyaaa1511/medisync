@@ -132,6 +132,14 @@ function DoctorAppointments() {
                         const patientName = appointment.patient?.name || "Unknown Patient";
                         const patientEmail = appointment.patient?.email || "N/A";
                         const isActionable = appointment.status === "confirmed" || appointment.status === "booked";
+                        let isPast = false;
+                        if (isActionable && appointment.date && appointment.startTime) {
+                            const apptDateTime = new Date(`${appointment.date}T${appointment.startTime}:00`);
+                            const now = new Date();
+                            if (!isNaN(apptDateTime.getTime())) {
+                                isPast = apptDateTime <= now;
+                            }
+                        }
 
                         return (
                             <Card key={appointment._id}>
@@ -159,23 +167,45 @@ function DoctorAppointments() {
                                 </div>
 
                                 {isActionable && (
-                                    <div style={{ display: "flex", justifyContent: "flex-end", gap: "12px" }}>
-                                        <Button
-                                            onClick={() => completeAppointment(appointment._id)}
-                                            disabled={completingId !== null || cancellingId !== null}
-                                            variant="secondary"
-                                            style={{ color: "var(--success)", borderColor: "var(--success)", height: "36px", fontSize: "13px" }}
-                                        >
-                                            {completingId === appointment._id ? "Completing..." : "Mark Completed"}
-                                        </Button>
-                                        <Button
-                                            onClick={() => triggerCancelConfirmation(appointment._id)}
-                                            disabled={completingId !== null || cancellingId !== null}
-                                            variant="danger"
-                                            style={{ height: "36px", fontSize: "13px" }}
-                                        >
-                                            Cancel Appointment
-                                        </Button>
+                                    <div style={{ display: "flex", flexDirection: "column", gap: "12px", alignItems: "stretch" }}>
+                                        {isPast && (
+                                            <div style={{ 
+                                                display: "flex", 
+                                                alignItems: "center", 
+                                                gap: "8px", 
+                                                padding: "10px 14px", 
+                                                borderRadius: "var(--radius-sm)", 
+                                                backgroundColor: "var(--danger-bg)", 
+                                                color: "var(--danger)", 
+                                                fontSize: "13px", 
+                                                fontWeight: "600",
+                                                border: "1px solid rgba(200, 92, 92, 0.2)",
+                                                boxSizing: "border-box",
+                                                width: "100%"
+                                            }}>
+                                                <span>🚫</span> This appointment can no longer be cancelled.
+                                            </div>
+                                        )}
+                                        <div style={{ display: "flex", justifyContent: "flex-end", gap: "12px", width: "100%" }}>
+                                            <Button
+                                                onClick={() => completeAppointment(appointment._id)}
+                                                disabled={completingId !== null || cancellingId !== null}
+                                                variant="secondary"
+                                                style={{ color: "var(--success)", borderColor: "var(--success)", height: "36px", fontSize: "13px" }}
+                                            >
+                                                {completingId === appointment._id ? "Completing..." : "Mark Completed"}
+                                            </Button>
+                                            {!isPast && (
+                                                <Button
+                                                    onClick={() => triggerCancelConfirmation(appointment._id)}
+                                                    disabled={completingId !== null || cancellingId !== null}
+                                                    variant="danger"
+                                                    style={{ height: "36px", fontSize: "13px" }}
+                                                >
+                                                    Cancel Appointment
+                                                </Button>
+                                            )}
+                                        </div>
                                     </div>
                                 )}
                             </Card>
