@@ -32,7 +32,7 @@ function FindDoctor({ doctors, loading, error }) {
             )}
 
             {loading ? (
-                <div style={{ display: "flex", flexWrap: "wrap", gap: "20px" }}>
+                <div className="doctor-directory-grid">
                     {[1, 2, 3].map(i => (
                         <div key={i} className="ms-card" style={{ width: "300px", height: "180px", display: "flex", flexDirection: "column", gap: "12px" }}>
                             <Skeleton style={{ height: "20px", width: "70%" }} />
@@ -52,7 +52,7 @@ function FindDoctor({ doctors, loading, error }) {
                     description="There are currently no healthcare specialists matching your search filters."
                 />
             ) : (
-                <div style={{ display: "flex", flexWrap: "wrap", gap: "20px" }}>
+                <div className="doctor-directory-grid">
                     {doctors.map(doctor => (
                         <DoctorCard
                             key={doctor._id}

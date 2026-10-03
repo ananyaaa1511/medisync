@@ -226,7 +226,7 @@ function DoctorSlots() {
     return (
         <div style={{ display: "flex", flexDirection: "column", gap: "25px" }}>
             {/* Statistics Row */}
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "20px" }}>
+            <div className="responsive-stats-grid">
                 <Card style={{ display: "flex", alignItems: "center", gap: "16px" }}>
                     <div style={{ width: "44px", height: "44px", borderRadius: "50%", background: "var(--primary-light)", color: "var(--primary)", display: "flex", alignItems: "center", justifyWindow: "center", justifyContent: "center" }}>
                         📅
@@ -277,7 +277,7 @@ function DoctorSlots() {
             </div>
 
             {/* Dashboard grid (Form & List) */}
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: "30px", alignItems: "start" }}>
+            <div className="responsive-two-column-grid">
                 {/* Left: Create Form */}
                 <Card>
                     <h2 style={{ margin: "0 0 4px 0" }}>Create a New Slot</h2>

@@ -4,7 +4,7 @@ import Button from "./ui/Button";
 
 function DoctorCard({ doctor }) {
     return (
-        <Card style={{ width: "300px", display: "flex", flexDirection: "column", gap: "8px" }}>
+        <Card className="doctor-directory-card" style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
             <h3 style={{ margin: "0 0 4px 0", fontSize: "16px", color: "var(--text-primary)" }}>
                 Dr. {doctor.user?.name || "Unknown Doctor"}
             </h3>

@@ -18,7 +18,6 @@
     background-color: var(--white);
     color: var(--text-dark);
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    overflow-x: hidden;
     scroll-behavior: smooth;
 }
 
@@ -1167,6 +1166,8 @@ FOOTER SECTION
     color: #9aa5a8;
     padding: 80px 24px 40px;
     border-top: 1px solid #1c2a2e;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .landing-footer-container {

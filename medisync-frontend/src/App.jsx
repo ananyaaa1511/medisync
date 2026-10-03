@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import api from "./api/axios";
-import DoctorCard from "./components/DoctorCard";
-import { Routes, Route, useNavigate, useLocation, Navigate } from "react-router-dom";
+import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import DoctorProfile from "./pages/DoctorProfile";
 import Footer from "./components/Footer";
 import BookAppointment from "./pages/BookAppointment";
@@ -69,65 +68,39 @@ function App() {
     // Show the simple navbar on public doctor list and profile details pages
     const showDefaultNavbar = location.pathname.startsWith("/doctors");
 
+    const [publicMenuOpen, setPublicMenuOpen] = useState(false);
+    const isFullWidthPage = location.pathname.startsWith("/doctor") || ["/find-doctor", "/appointments", "/symptom-analyzer"].includes(location.pathname) || location.pathname === "/";
+
+    const navigateFromPublicMenu = (path) => {
+        setPublicMenuOpen(false);
+        navigate(path);
+    };
+
     return (
-        <div style={{ padding: location.pathname.startsWith("/doctor") || ["/find-doctor", "/appointments", "/symptom-analyzer"].includes(location.pathname) || location.pathname === "/" ? "0" : "20px", maxWidth: location.pathname.startsWith("/doctor") || ["/find-doctor", "/appointments", "/symptom-analyzer"].includes(location.pathname) || location.pathname === "/" ? "100%" : "1200px", margin: "0 auto" }}>
+        <div className={`app-page-wrapper ${isFullWidthPage ? "app-page-wrapper-full" : ""}`}>
             {showDefaultNavbar && (
-                <div style={{ 
-                     display: "flex", 
-                     justifyContent: "space-between", 
-                     alignItems: "center", 
-                     padding: "15px 20px", 
-                     borderBottom: "1px solid #eee",
-                     backgroundColor: "#fff",
-                     boxShadow: "0 2px 4px rgba(0,0,0,0.02)",
-                     borderRadius: "8px",
-                     marginBottom: "20px" 
-                }}>
-                    <h1 style={{ margin: 0, fontSize: "24px", cursor: "pointer", color: "#176b7c" }} onClick={() => navigate(token ? "/find-doctor" : "/")}>
+                <header className="public-navbar">
+                    <h1 className="public-navbar-brand" onClick={() => navigate(token ? "/find-doctor" : "/")}>
                         MediSync
                     </h1>
-                    <div style={{ display: "flex", gap: "10px" }}>
+                    <div className="public-navbar-actions">
                         {token ? (
                             <>
                                 <button 
                                     onClick={() => navigate("/find-doctor")}
-                                    style={{ 
-                                        padding: "8px 15px", 
-                                        cursor: "pointer", 
-                                        borderRadius: "4px", 
-                                        border: "1px solid #176b7c", 
-                                        backgroundColor: "#176b7c", 
-                                        color: "white", 
-                                        fontWeight: "bold" 
-                                    }}
+                                    className="public-nav-button public-nav-primary"
                                 >
                                     Find a Doctor
                                 </button>
                                 <button 
                                     onClick={() => navigate("/symptom-analyzer")}
-                                    style={{ 
-                                        padding: "8px 15px", 
-                                        cursor: "pointer", 
-                                        borderRadius: "4px", 
-                                        border: "1px solid #17a2b8", 
-                                        backgroundColor: "#17a2b8", 
-                                        color: "white", 
-                                        fontWeight: "bold" 
-                                    }}
+                                    className="public-nav-button public-nav-ai"
                                 >
                                     AI Symptom Analyzer
                                 </button>
                                 <button 
                                     onClick={() => navigate("/appointments")}
-                                    style={{ 
-                                        padding: "8px 15px", 
-                                        cursor: "pointer", 
-                                        borderRadius: "4px", 
-                                        border: "1px solid #007bff", 
-                                        backgroundColor: "#007bff", 
-                                        color: "white", 
-                                        fontWeight: "bold" 
-                                    }}
+                                    className="public-nav-button public-nav-appointments"
                                 >
                                     My Appointments
                                 </button>
@@ -147,36 +120,34 @@ function App() {
                             <>
                                 <button 
                                     onClick={() => navigate("/login")}
-                                    style={{ 
-                                        padding: "8px 15px", 
-                                        cursor: "pointer", 
-                                        borderRadius: "4px", 
-                                        border: "1px solid #176b7c", 
-                                        backgroundColor: "#fff", 
-                                        color: "#176b7c",
-                                        fontWeight: "bold"
-                                    }}
+                                    className="public-nav-button public-nav-login"
                                 >
                                     Login
                                 </button>
                                 <button 
                                     onClick={() => navigate("/register")}
-                                    style={{ 
-                                        padding: "8px 15px", 
-                                        cursor: "pointer", 
-                                        borderRadius: "4px", 
-                                        border: "none", 
-                                        backgroundColor: "#176b7c", 
-                                        color: "#fff",
-                                        fontWeight: "bold"
-                                    }}
+                                    className="public-nav-button public-nav-primary"
                                 >
                                     Register
                                 </button>
                             </>
                         )}
                     </div>
-                </div>
+                    <button className="public-menu-toggle" onClick={() => setPublicMenuOpen(open => !open)} aria-label="Toggle navigation menu" aria-expanded={publicMenuOpen}>
+                        {publicMenuOpen ? "✕" : "☰"}
+                    </button>
+                    <div className={`public-mobile-menu ${publicMenuOpen ? "open" : ""}`}>
+                        {token ? <>
+                            <button className="public-nav-button public-nav-primary" onClick={() => navigateFromPublicMenu("/find-doctor")}>Find a Doctor</button>
+                            <button className="public-nav-button public-nav-ai" onClick={() => navigateFromPublicMenu("/symptom-analyzer")}>AI Symptom Analyzer</button>
+                            <button className="public-nav-button public-nav-appointments" onClick={() => navigateFromPublicMenu("/appointments")}>My Appointments</button>
+                            <button className="ms-logout-btn" onClick={() => { setPublicMenuOpen(false); setShowLogoutModal(true); }}>Logout</button>
+                        </> : <>
+                            <button className="public-nav-button public-nav-login" onClick={() => navigateFromPublicMenu("/login")}>Login</button>
+                            <button className="public-nav-button public-nav-primary" onClick={() => navigateFromPublicMenu("/register")}>Register</button>
+                        </>}
+                    </div>
+                </header>
             )}
             <Routes>
 
@@ -209,7 +180,7 @@ function App() {
                 path="/doctors"
                 element={
                     <>
-                        <div style={{ padding: "40px 20px", maxWidth: "1200px", margin: "0 auto", minHeight: "calc(100vh - 250px)", boxSizing: "border-box" }}>
+                        <div className="public-doctor-list-page">
                             <FindDoctor doctors={doctors} loading={loading} error={error} />
                         </div>
                         <Footer />

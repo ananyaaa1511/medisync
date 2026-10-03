@@ -70,6 +70,7 @@ HERO CARD
     display: flex;
     flex-direction: column;
     gap: 6px;
+    min-width: 0;
 }
 
 .dr-hero-info h1 {
@@ -193,6 +194,7 @@ TWO COLUMN LAYOUT
 .dr-grid-content {
     display: flex;
     flex-direction: column;
+    min-width: 0;
 }
 
 .dr-grid-label {
@@ -373,6 +375,10 @@ RESPONSIVE BREAKPOINTS
 }
 
 @media (max-width: 600px) {
+    .doctor-profile-page {
+        padding: 16px;
+        gap: 16px;
+    }
     .dr-hero-card {
         flex-direction: column;
         text-align: center;
@@ -396,6 +402,11 @@ RESPONSIVE BREAKPOINTS
 
     .dr-stats-row {
         justify-content: center;
+    }
+
+    .dr-stat-box {
+        min-width: 0;
+        flex: 1 1 120px;
     }
 
     .dr-info-grid {

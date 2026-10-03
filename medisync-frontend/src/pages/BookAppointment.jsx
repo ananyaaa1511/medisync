@@ -118,7 +118,7 @@ function BookAppointment() {
     }
 
     return (
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: "30px", alignItems: "start" }}>
+        <div className="responsive-two-column-grid">
             
             {/* Doctor profile details */}
             <Card>
@@ -171,7 +171,7 @@ function BookAppointment() {
                             description="This doctor has not listed any availability slots right now. Please check back later."
                         />
                     ) : (
-                        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(180px, 1fr))", gap: "10px" }}>
+                        <div className="responsive-slot-grid">
                             {slots.map(slot => {
                                 const isSelected = selectedSlot?._id === slot._id;
                                 return (
@@ -218,7 +218,7 @@ function BookAppointment() {
                             </div>
                         </div>
 
-                        <div style={{ display: "flex", gap: "10px" }}>
+                        <div className="responsive-action-row">
                             <Button 
                                 variant="primary" 
                                 onClick={handleBooking}
